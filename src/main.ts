@@ -1,5 +1,7 @@
+import { startREPL } from "./repl.js";
+
 function main() {
-    console.log("main file testing");
+    startREPL();    
 }
 
 main(); 
