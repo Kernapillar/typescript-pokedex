@@ -1,4 +1,5 @@
 import { createInterface } from "node:readline";
+import { getCommands } from "./command.js";
 
 export function cleanInput(input: string): string[] {
     const words = input.trim().split(" ");
@@ -14,13 +15,21 @@ export function startREPL(): void {
         output: process.stdout,
         prompt: "Pokedex > "
     });
+    const commands = getCommands();
     pokeInterface.prompt();
     pokeInterface.on("line", (input) => {
         const cleanedInput = cleanInput(input);
         if (cleanedInput.length === 0) {
             pokeInterface.prompt()
         };
-        console.log(`Your command was: ${cleanedInput[0]}`);
+        
+        const cmd = commands[cleanedInput[0]]; 
+        if (cmd) {
+            cmd.callback(commands); 
+        } else {
+            console.log("Unknown command")
+        }
+
         pokeInterface.prompt()
     });
 
