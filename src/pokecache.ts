@@ -25,21 +25,22 @@ export class Cache {
 
     get<T>(key: string):CacheEntry<any> | undefined {
         if (!this.#cache.has(key)) return undefined;
-        return this.#cache.get(key);
+        const entry = this.#cache.get(key);
+        return entry ? (entry.val as CacheEntry<T>) : undefined 
     }
 
 
     #clear(): void {
         for (const [key, value] of this.#cache) {
             const element = value;
-            if (element.createdAt > Date.now() - this.#interval) {
+            if (element.createdAt < Date.now() - this.#interval) {
                 this.#cache.delete(key);
             }
         }
     }
 
     #startClearLoop(): void {
-        this.#clearIntervalId = setInterval(this.#clear, this.#interval);
+        this.#clearIntervalId = setInterval(() => this.#clear(), this.#interval);
     }
 
     stopClearLoop(): void {

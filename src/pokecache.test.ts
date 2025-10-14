@@ -20,8 +20,8 @@ test.concurrent.each([
   expect(cached).toBe(val);
 
   await new Promise((resolve) => setTimeout(resolve, interval + 100));
-  const reaped = cache.get(key);
-  expect(reaped).toBe(undefined);
+  const cleared = cache.get(key);
+  expect(cleared).toBe(undefined);
 
   cache.stopClearLoop();
 });
