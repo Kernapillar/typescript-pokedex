@@ -1,5 +1,4 @@
 
-
 export type CacheEntry<T> = {
     createdAt: number; 
     val: T
@@ -23,10 +22,10 @@ export class Cache {
         this.#cache.set(key, value);
     }
 
-    get<T>(key: string):CacheEntry<any> | undefined {
+    get<T>(key: string):T | undefined {
         if (!this.#cache.has(key)) return undefined;
         const entry = this.#cache.get(key);
-        return entry ? (entry.val as CacheEntry<T>) : undefined 
+        return entry?.val
     }
 
 
