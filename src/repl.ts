@@ -19,9 +19,10 @@ export async function startREPL(state: State): Promise<void> {
         };
         
         const cmd = state.commands[cleanedInput[0]]; 
+        const addArgs = cleanedInput.slice(1);
         if (cmd) {
             try {
-                await cmd.callback(state); 
+                await cmd.callback(state, ...addArgs); 
             } catch (err) {
                 console.error("Error:", (err as Error).message)
             }

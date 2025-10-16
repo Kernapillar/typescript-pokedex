@@ -22,7 +22,7 @@ export class PokeAPI {
     return result;
   }
 
-  async fetchLocation(locationName: string): Promise<Location> {
+  async fetchLocation(locationName: string): Promise<locationAreaDetail> {
     const url = `${PokeAPI.baseURL}/location-area/${locationName}` 
     const response = await fetch(url);
     if (!response.ok) {
@@ -43,3 +43,13 @@ export type Location = {
   name: string;
   url: string;
 };
+
+export type NamedAPIResource = {
+    name: string; 
+    url: string;
+}
+
+export type locationAreaDetail = {
+    name: string; 
+    pokemon_encounters: {pokemon: NamedAPIResource}[];
+}
