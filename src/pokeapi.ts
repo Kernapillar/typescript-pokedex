@@ -24,11 +24,17 @@ export class PokeAPI {
 
   async fetchLocation(locationName: string): Promise<locationAreaDetail> {
     const url = `${PokeAPI.baseURL}/location-area/${locationName}` 
+    const cached = this.#cache.get<locationAreaDetail>(url);
+    if (cached !== undefined){
+        return cached; 
+    }
     const response = await fetch(url);
     if (!response.ok) {
         throw new Error("invalid location");
     }
-    return response.json();
+    const result = await response.json(); 
+    this.#cache.add(url, result)
+    return result;
   }
 }
 
