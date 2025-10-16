@@ -36,7 +36,23 @@ export class PokeAPI {
     this.#cache.add(url, result)
     return result;
   }
+
+  async fetchPokemon(pokemonName: string): Promise<pokemonData> {
+    const url = `${PokeAPI.baseURL}/pokemon/${pokemonName}`
+    const cached = this.#cache.get<pokemonData>(url); 
+    if (cached !== undefined){
+        return cached;
+    }
+    const response = await fetch(url); 
+    if (!response.ok) {
+        throw new Error("invalid Pokemon Name");
+    }
+    const result = await response.json();
+    this.#cache.add(url, result); 
+    return result;
+  }
 }
+
 
 export type ShallowLocations = {
   count: string; 
@@ -58,4 +74,10 @@ export type NamedAPIResource = {
 export type locationAreaDetail = {
     name: string; 
     pokemon_encounters: {pokemon: NamedAPIResource}[];
+}
+
+export type pokemonData = {
+    id: number;
+    name: string; 
+    base_experience: number; 
 }
