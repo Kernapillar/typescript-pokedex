@@ -47,10 +47,31 @@ export class PokeAPI {
     if (!response.ok) {
         throw new Error("invalid Pokemon Name");
     }
-    const result = await response.json();
+    const result = this.parsePokemonData(await response.json())
     this.#cache.add(url, result); 
     return result;
   }
+
+  parsePokemonData(data: any): pokemonData {
+    const pokeData: pokemonData = {
+        id: data.id, 
+        name: data.name,
+        height: data.height,
+        weight: data.weight, 
+        base_experience: data.base_experience,
+        stats: {},
+        types: []
+    };
+    for (const stat of data.stats) {
+        pokeData.stats[stat.stat.name] = stat.base_stat
+    };
+
+    for (const type of data.types) {
+        pokeData.types.push(type.type.name);
+    }
+    return pokeData;
+  }
+
 }
 
 
@@ -80,4 +101,14 @@ export type pokemonData = {
     id: number;
     name: string; 
     base_experience: number; 
+    height: number;
+    weight: number; 
+    stats: PokemonStats;
+    types: string[];
 }
+
+ export type PokemonStats = {
+    [name: string]: number;
+ }
+
+ 
