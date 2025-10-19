@@ -15,7 +15,7 @@ export type State = {
     nextLocationsURL: string;
     prevLocationsURL: string;
     pokedex: Record<string, pokemonData>;
-}
+};
 
 export function initState(): State {
     const newInterface = createInterface({
@@ -32,6 +32,5 @@ export function initState(): State {
         nextLocationsURL: "",
         prevLocationsURL: "",
         pokedex: {}
-    }
-    
-}
+    };
+};

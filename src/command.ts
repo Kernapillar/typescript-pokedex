@@ -51,5 +51,5 @@ export function getCommands(): Record<string, CLICommand> {
             description: "List all of your pokemon", 
             callback: commandPokedex
         }, 
-    }
-}
+    };
+};

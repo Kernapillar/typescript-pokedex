@@ -8,4 +8,4 @@ export async function commandExplore(state: State, location: string): Promise<vo
     for (const encounter of exploreData.pokemon_encounters) {
         console.log(` - ${encounter.pokemon.name}`);
     };
-}
+};

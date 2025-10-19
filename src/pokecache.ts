@@ -2,7 +2,7 @@
 export type CacheEntry<T> = {
     createdAt: number; 
     val: T
-}
+};
 
 export class Cache {
     #cache = new Map<string, CacheEntry<any>>();
@@ -12,7 +12,7 @@ export class Cache {
     constructor(interval: number) {
         this.#interval = interval;
         this.#startClearLoop(); 
-    }
+    };
 
     add<T>(key: string, val: any): void {
         const value = {
@@ -20,13 +20,13 @@ export class Cache {
             val: val
         }
         this.#cache.set(key, value);
-    }
+    };
 
     get<T>(key: string):T | undefined {
         if (!this.#cache.has(key)) return undefined;
         const entry = this.#cache.get(key);
         return entry?.val
-    }
+    };
 
 
     #clear(): void {
@@ -34,17 +34,17 @@ export class Cache {
             const element = value;
             if (element.createdAt < Date.now() - this.#interval) {
                 this.#cache.delete(key);
-            }
-        }
-    }
+            };
+        };
+    };
 
     #startClearLoop(): void {
         this.#clearIntervalId = setInterval(() => this.#clear(), this.#interval);
-    }
+    };
 
     stopClearLoop(): void {
         clearInterval(this.#clearIntervalId);
         this.#clearIntervalId = undefined;
-    }
+    };
     
-}
+};

@@ -11,5 +11,5 @@ export async function commandCatch(state: State, pName: string): Promise<void> {
         state.pokedex[pName] = pokemonData;
     } else {
         console.log(`${pName} escaped!`);
-    }
-}
+    };
+};
